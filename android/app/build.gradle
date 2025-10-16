@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
+android {
+    namespace "com.example.news_core_app"
+    compileSdk flutter.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.example.news_core_app"
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.targetSdkVersion
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+    }
+
+    compileOptions {
+        // ✅ Enforce Java 17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+
+    kotlinOptions {
+        // ✅ Match Kotlin JVM target
+        jvmTarget = "17"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source "../.."
+}
+
+dependencies {
+    // ✅ Match Kotlin stdlib with plugin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.0"
+
+    // ✅ Needed for qr_code_scanner & modern APIs
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+}
