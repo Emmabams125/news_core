@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../resources/app_colours.dart';
 import '../../widgets/register_form.dart';
 
@@ -25,7 +26,7 @@ class RegisterScreen extends StatelessWidget {
                 // --- Logo & Title
                 Column(
                   children: [
-                    Image.asset('assets/images/Frame.png'),
+                    SvgPicture.asset('assets/icons/Frame3.svg'),
                     const SizedBox(height: 10),
                     Text(
                       'News Core',

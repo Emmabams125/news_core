@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../helpers/hive_helper.dart';
 import '../../resources/app_colours.dart';
@@ -40,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/Frame.png'),
+            SvgPicture.asset('assets/icons/Frame3.svg'),
             const SizedBox(height: 16),
             Text(
               'News Core',

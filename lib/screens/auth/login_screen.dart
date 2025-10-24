@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../resources/app_colours.dart';
 import '../../widgets/login_form.dart';
 
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                 // --- Logo & Title
                 Column(
                   children: [
-                    Image.asset('assets/images/Frame.png'),
+                    SvgPicture.asset('assets/icons/Frame3.svg'),
                     const SizedBox(height: 10),
                     Text(
                       'News Core',

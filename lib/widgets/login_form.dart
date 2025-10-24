@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(imagePath, width: 22.w, height: 22.h),
+          SvgPicture.asset(imagePath, width: 22.w, height: 22.h),
           SizedBox(width: 8.w),
           Flexible(
             child: Text(
@@ -100,17 +100,14 @@ class _LoginFormState extends State<LoginForm> {
               Expanded(
                 child: GestureDetector(
                   onTap: authController.loginWithGoogle,
-                  child: _socialButton('assets/images/Google.png', "Google"),
+                  child: _socialButton('assets/icons/Google.svg', "Google"),
                 ),
               ),
               SizedBox(width: 10.w),
               Expanded(
                 child: GestureDetector(
                   onTap: authController.loginWithFacebook,
-                  child: _socialButton(
-                    'assets/images/Facebook.png',
-                    "Facebook",
-                  ),
+                  child: _socialButton('assets/icons/Group2.svg', "Facebook"),
                 ),
               ),
             ],
