@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../helpers/hive_helper.dart';
 import '../../resources/app_colours.dart';
@@ -43,7 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 16),
             Text(
               'News Core',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+              style: TextStyle(
+                fontFamily: 'Satoshi',
+                color: Colors.white,
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),

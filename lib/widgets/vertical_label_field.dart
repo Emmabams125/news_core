@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:untitled/resources/app_colours.dart';
 
 class VerticalLabelField extends StatelessWidget {
   const VerticalLabelField({
@@ -56,10 +57,11 @@ class VerticalLabelField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: GoogleFonts.bricolageGrotesque(
+          style: TextStyle(
+            fontFamily: 'Satoshi',
             fontWeight: FontWeight.w500,
-            fontSize: 20.sp,
-            color: const Color(0xFF11183C),
+            fontSize: 16.sp,
+            color: AppColors.darkNavy,
             height: 1.2,
           ),
         ),
@@ -74,9 +76,10 @@ class VerticalLabelField extends StatelessWidget {
               flex: mainFieldFlex,
               child: TextField(
                 controller: controller,
-                style: GoogleFonts.bricolageGrotesque(
+                style: TextStyle(
+                  fontFamily: 'Satoshi',
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xFF11183C),
+                  color: AppColors.darkNavy,
                 ),
                 focusNode: focusNode,
                 keyboardType: keyboardType,
@@ -92,7 +95,7 @@ class VerticalLabelField extends StatelessWidget {
                             12, // reduce this value to make the field shorter
                         horizontal: 12,
                       ),
-                ), // ✅ apply decoration
+                ), // apply decoration
               ),
             ),
           ],

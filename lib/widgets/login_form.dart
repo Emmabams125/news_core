@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../widgets/custom_app_button.dart';
-import 'package:untitled/widgets/vertical_label_field.dart';
 import '../controllers/auth_controllers.dart';
 import '../resources/app_colours.dart';
 import '../services/route_names.dart';
+import '../widgets/vertical_label_field.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -16,10 +17,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final formKey = GlobalKey<FormState>();
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
   final obscurePasswordNotifier = ValueNotifier(true);
 
   final AuthController authController = Get.put(AuthController());
@@ -28,7 +27,6 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    confirmPasswordController.dispose();
     obscurePasswordNotifier.dispose();
     super.dispose();
   }
@@ -44,16 +42,28 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget _socialButton(String imagePath, String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 13),
+      height: 48.h,
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
       decoration: BoxDecoration(
         color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(imagePath, width: 24, height: 24),
-          const SizedBox(width: 8),
-          Text(text),
+          Image.asset(imagePath, width: 22.w, height: 22.h),
+          SizedBox(width: 8.w),
+          Flexible(
+            child: Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -66,83 +76,124 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            color: Color(0xFF071A27),
-            'assets/images/Frame.png',
+          SvgPicture.asset(
+            'assets/icons/Star1.svg',
             width: 24, // adjust width as needed
             height: 24, // optional: adjust height too
-            fit: BoxFit.contain, // ensures the image scales nicely
+            // ensures the image scales nicely
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             'Login',
-            style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              fontFamily: 'Satoshi',
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: AppColors.darkNavy,
+            ),
           ),
           const SizedBox(height: 16),
+
+          // Social Buttons
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GestureDetector(
-                onTap: authController.loginWithGoogle,
-                child: _socialButton('assets/images/Google.png', "Google"),
+              Expanded(
+                child: GestureDetector(
+                  onTap: authController.loginWithGoogle,
+                  child: _socialButton('assets/images/Google.png', "Google"),
+                ),
               ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: authController.loginWithFacebook,
-                child: _socialButton('assets/images/Facebook.png', "Facebook"),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: GestureDetector(
+                  onTap: authController.loginWithFacebook,
+                  child: _socialButton(
+                    'assets/images/Facebook.png',
+                    "Facebook",
+                  ),
+                ),
               ),
             ],
           ),
-
           const SizedBox(height: 24),
+
+          // Email
           VerticalLabelField(
             label: 'Email',
             controller: emailController,
             style: GoogleFonts.inter(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xFF071A27),
+              fontWeight: FontWeight.w500,
+              color: AppColors.darkNavy,
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.grey[200],
-              prefixIcon: null,
+              fillColor: AppColors.primaryGrey,
               hintText: "Enter your email",
               hintStyle: const TextStyle(color: Colors.grey),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: Color(0xFFD9D9D9),
+                  width: 1,
+                ),
+              ),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: Color(0xFFD9D9D9),
+                  width: 1,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 2),
-                borderRadius: BorderRadius.circular(3),
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppColors.darkNavy, width: 1.5),
               ),
             ),
             keyboardType: TextInputType.emailAddress,
+            validator: (value) =>
+                value!.isEmpty ? "Please enter your email" : null,
           ),
+
           const SizedBox(height: 12),
+
+          // Password
           ValueListenableBuilder<bool>(
             valueListenable: obscurePasswordNotifier,
             builder: (context, obscure, _) => VerticalLabelField(
+              label: 'Password',
               controller: passwordController,
               obscureText: obscure,
-              contextPadding: const EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 12,
-              ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.grey[200],
-                prefixIcon: null,
+                fillColor: AppColors.primaryGrey,
                 hintText: "Enter your password",
                 hintStyle: const TextStyle(color: Colors.grey),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFFD9D9D9),
+                    width: 1,
+                  ),
+                ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: const BorderSide(
+                    color: Color(0xFFD9D9D9),
+                    width: 1,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey, width: 2),
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: AppColors.darkNavy, width: 1.5),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
@@ -150,21 +201,33 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               validator: (value) =>
-                  value!.isEmpty ? "Please enter a password" : null,
-              label: 'Password',
+                  value!.isEmpty ? "Please enter your password" : null,
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: const Color(0xFF071A27),
+                color: AppColors.darkNavy,
               ),
             ),
           ),
-          const SizedBox(height: 24),
-          // CustomAppButton(
-          //   text: "Register",
-          //   onPressed: submitForm,
-          // ),
-          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              child: Text(
+                'Forgot Password?',
+                style: TextStyle(
+                  fontFamily: 'Satoshi',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                  height: 1.5,
+                  color: AppColors.darkNavy,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 60),
+
+          // Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -172,58 +235,55 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () => Get.toNamed(Routes.register),
                 child: Text(
                   "Sign Up",
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    color: const Color(0xFF071A27),
+                  style: TextStyle(
+                    fontFamily: 'Satoshi',
                     fontWeight: FontWeight.w500,
+                    fontSize: 16.sp,
+                    height: 1.5,
+                    color: AppColors.darkNavy,
                   ),
                 ),
               ),
               Obx(
-                () => SizedBox(
-                  width: 148,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: authController.isLoading.value
-                        ? null
-                        : submitForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF071A27),
-                      padding: const EdgeInsets.fromLTRB(30, 16, 30, 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      elevation: 0,
+                () => ElevatedButton(
+                  onPressed: authController.isLoading.value ? null : submitForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.darkNavy,
+                    minimumSize: Size(130.w, 56.h),
+                    padding: EdgeInsets.fromLTRB(30.w, 16.h, 30.w, 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.r),
                     ),
-                    child: authController.isLoading.value
-                        ? SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryPurple,
-                              strokeWidth: 2.5,
-                            ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Login",
-                                style: GoogleFonts.inter(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ],
-                          ),
+                    elevation: 0,
                   ),
+                  child: authController.isLoading.value
+                      ? SizedBox(
+                          width: 24.w,
+                          height: 24.h,
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryPurple,
+                            strokeWidth: 3,
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Login",
+                              style: GoogleFonts.inter(
+                                fontSize: 16.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 10.w),
+                            SvgPicture.asset(
+                              'assets/icons/arrow-up.svg',
+                              // optional: adjust height too
+                              // ensures the image scales nicely
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ],

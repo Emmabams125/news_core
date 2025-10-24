@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(411, 867),
+      designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -30,6 +30,12 @@ class MyApp extends StatelessWidget {
           initialRoute: Routes.splashScreen,
           getPages: AppPages.routes,
           themeMode: ThemeMode.system,
+          theme: ThemeData(fontFamily: 'Satoshi', useMaterial3: true),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            fontFamily: 'Satoshi',
+            useMaterial3: true,
+          ),
           builder: (context, widget) {
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

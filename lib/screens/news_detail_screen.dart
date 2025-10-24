@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailScreen extends StatelessWidget {
@@ -41,14 +42,21 @@ class NewsDetailScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_rounded),
-            color: colorScheme.onSurface,
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: SvgPicture.asset(
+              'assets/icons/notification-bing.svg',
+              height: 24, // optional, for sizing
+              width: 24, // optional, for sizing
+              colorFilter: ColorFilter.mode(
+                colorScheme.onSurface,
+                BlendMode.srcIn,
+              ), // makes it match your theme color
+            ),
           ),
-          const SizedBox(width: 8),
         ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -70,13 +78,6 @@ class NewsDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              "Hot news",
-              style: textTheme.labelMedium?.copyWith(
-                color: Colors.redAccent,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
             const SizedBox(height: 8),
 
             // Title
@@ -116,25 +117,6 @@ class NewsDetailScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-
-            // Read full button
-            Center(
-              child: ElevatedButton(
-                onPressed: _launchURL,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  minimumSize: const Size(double.infinity, 55),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                ),
-                child: const Text(
-                  'Read Full Article',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
           ],
         ),
       ),

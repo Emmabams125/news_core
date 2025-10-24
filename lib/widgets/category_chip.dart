@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/resources/app_colours.dart';
 
 class CategoryChip extends StatelessWidget {
   final String label;
@@ -16,17 +17,20 @@ class CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.deepPurple : Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(25),
+          color: isSelected ? const Color(0xFF3C25B3) : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black87,
-            fontWeight: FontWeight.w500,
+            fontFamily: 'Satoshi',
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
+            color: isSelected ? Colors.white : const Color(0xFF475569),
           ),
         ),
       ),

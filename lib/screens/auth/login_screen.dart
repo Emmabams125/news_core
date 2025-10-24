@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:untitled/widgets/login_form.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../resources/app_colours.dart';
+import '../../widgets/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,44 +12,88 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryPurple,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          reverse: true, // ensures keyboard pushes content up
+          reverse: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: kToolbarHeight + 20,
-                ), // space after appbar
+                const SizedBox(height: kToolbarHeight + 20),
+
+                // --- Logo & Title
                 Column(
                   children: [
                     Image.asset('assets/images/Frame.png'),
                     const SizedBox(height: 10),
                     Text(
                       'News Core',
-                      style: GoogleFonts.inter(
+                      style: TextStyle(
+                        fontFamily: 'Satoshi',
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 28.sp,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 70),
-                Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(30),
-                      bottom: Radius.circular(30),
-                    ),
+
+                const SizedBox(height: 100),
+
+                // --- Layered Containers
+                Center(
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      // --- Back transparent layer (smallest & highest)
+                      Positioned(
+                        top: -18.h, // lifted up slightly
+                        child: Container(
+                          width: 310.w,
+                          height: 502.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                        ),
+                      ),
+
+                      Positioned(
+                        top: -9.h, // between back and main
+                        child: Container(
+                          width: 330.w,
+                          height: 492.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        width: 350.w,
+                        height: 506.h,
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.08),
+                              blurRadius: 15,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: const LoginForm(),
+                      ),
+                    ],
                   ),
-                  child: const LoginForm(),
                 ),
-                const SizedBox(height: 15),
               ],
             ),
           ),

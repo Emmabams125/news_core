@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:untitled/screens/history_screen.dart';
 import 'package:untitled/screens/like_screen.dart';
 import 'package:untitled/screens/profile_screen.dart';
 import '../resources/app_colours.dart';
-
 import 'home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -33,43 +33,57 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final icons = [
-      Icons.home_rounded,
-      Icons.history_rounded,
-      Icons.favorite_border_rounded,
-      Icons.person_outline_rounded,
+    final svgIcons = [
+      'assets/icons/home.svg',
+      'assets/icons/explore.svg',
+      'assets/icons/heart.svg',
+      'assets/icons/profile.svg',
     ];
 
     return Scaffold(
       body: _screens[_selectedIndex],
       backgroundColor: Colors.white,
-      bottomNavigationBar: Container(
-        height: 65,
-        decoration: BoxDecoration(
-          color: AppColors.primaryPurple,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: List.generate(icons.length, (index) {
-            final isActive = index == _selectedIndex;
-            return GestureDetector(
-              onTap: () => _onItemTapped(index),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: isActive ? Colors.white24 : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icons[index],
-                  color: isActive ? Colors.white : Colors.white70,
-                  size: isActive ? 28 : 24,
-                ),
-              ),
-            );
-          }),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Container(
+          height: 68,
+          decoration: BoxDecoration(
+            color: AppColors.primaryPurple,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(svgIcons.length, (index) {
+                final isActive = index == _selectedIndex;
+                return GestureDetector(
+                  onTap: () => _onItemTapped(index),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: 48,
+                    height: 36,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isActive
+                          ? const Color(0xFF071A27)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: SvgPicture.asset(
+                      svgIcons[index],
+                      color: isActive ? Colors.white : Colors.white70,
+                      width: isActive ? 26 : 24,
+                      height: isActive ? 26 : 24,
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
         ),
       ),
     );
